@@ -2,7 +2,9 @@
 @section('content')
     <div class="container">
         <h1>Danh sách bài viết</h1>
-        <div class="flex flex-col-reverse"><a href="{{ route('posts.create') }}" type="button" class="btn btn-primary rounded-pill mb-3  mr-0">ADD POST</a></div>
+        <div class="d-flex justify-content-end mb-3">
+            <a href="{{ route('posts.create') }}" type="button" class="btn btn-primary rounded-pill mr-0">Thêm bài viết</a>
+        </div>
         <table class="table">
             <thead>
             <tr>
@@ -24,10 +26,9 @@
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-id="{{ $post->id }}" data-type="post">
                             Xem nội dung bài viết
                         </button>
-                        <button type="button" class="btn btn-primary"  data-toggle="modal" data-target="#exampleModal" data-id="{{ $post->seo->id }}" data-type="seo">
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-id="{{ $post->seo->id }}" data-type="seo">
                             Xem nội dung SEO
                         </button>
-
                         <a href="{{ route('posts.edit', $post->id) }}" class="btn btn-warning">Sửa bài viết</a>
                         <form action="{{ route('posts.destroy', $post->id) }}" method="POST" style="display: inline;">
                             @csrf
@@ -37,9 +38,11 @@
                     </td>
                 </tr>
             @endforeach
-
             </tbody>
         </table>
+        <div class="d-flex justify-content-center mt-4">
+            {{ $posts->links() }}
+        </div>
     </div>
 
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -66,7 +69,7 @@
         $(document).ready(function() {
             $('.btn-primary').on('click', function() {
                 var postId = $(this).data('id');
-                var dataType = $(this).data('type'); // Loại dữ liệu: 'post' hoặc 'seo'
+                var dataType = $(this).data('type');
 
                 $.ajax({
                     url: '/admin/posts/' + postId + '/details/' + dataType,
@@ -84,4 +87,3 @@
         });
     </script>
 @endsection
-

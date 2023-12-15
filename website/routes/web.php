@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\PostController;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,4 +32,18 @@ Route::group(['prefix' => 'admin'], function () {
 });
 Route::get('/tinymce', function () {
     return view('tinymce');
+
 });
+
+Route::get('/storage/{filename}', function ($filename) {
+    $path = storage_path('app/public/' . $filename);
+
+    if (!Storage::exists($path)) {
+        abort(404);
+    }
+
+    $file = Storage::get($path);
+    $type = Storage::mimeType($path);
+
+    return Response::make($file, 200)->header('Content-Type', $type);
+})->where('filename', '.*');
