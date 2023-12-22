@@ -30,7 +30,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="image">Image URL</label>
-                                <input type="text" class="form-control" id="image_label"  required name="image" aria-label="Image" aria-describedby="button-image">
+                                <input type="text" class="form-control" id="image_label"  required name="image" aria-label="Image" >
                                 <div class="input-group-append mt-2">
                                     <button class="btn btn-outline-secondary" type="button" id="button-image">Select</button>
                                 </div>
@@ -82,5 +82,22 @@
             </div>
         </div>
     </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+
+            document.getElementById('button-image').addEventListener('click', (event) => {
+                event.preventDefault();
+
+                window.open('/file-manager/fm-button', 'fm', 'width=1400,height=800');
+            });
+        });
+
+        // set file link
+        function fmSetLink(url) {
+            url = url.replace(/^.*\/\/[^\/]+/, '');
+            console.log(url)
+            document.getElementById('image_label').value = url;
+        }
+    </script>
 @endsection
 

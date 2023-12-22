@@ -82,5 +82,24 @@
             </div>
         </div>
     </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+
+            document.getElementById('button-image').addEventListener('click', (event) => {
+                event.preventDefault();
+
+                window.open('/file-manager/fm-button', 'fm', 'width=1400,height=800');
+            });
+        });
+
+        // set file link
+        function fmSetLink(url) {
+            //console.log(url)
+            url = url.replace(/^.*\/\/[^\/]+/, ''); // remove domain
+            console.log(url)
+            document.getElementById('image_label').value = url;
+            document.getElementById("icon_preview").src = url;
+        }
+    </script>
 @endsection
 
